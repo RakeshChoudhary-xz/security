@@ -1,0 +1,635 @@
+/* Base Styles */
+:root {
+    --primary-color: #FFA500; /* Orange */
+    --secondary-color: #d4c57a; /* Gold/Yellow */
+    --success-color: #4CAF50;
+    --danger-color: #FF4500; /* Orange-Red */
+    --warning-color: #FFD700; /* Yellow */
+    --info-color: #1E90FF; /* Dodger Blue */
+    --light-color: #FFF8DC; /* Cornsilk */
+    --dark-color: #000000; /* Black */
+    --sidebar-width: 250px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #FFF8DC;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* App Container */
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--dark-color);
+    color: var(--warning-color);
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-speed);
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+    border-right: 2px solid var(--warning-color);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--warning-color);
+}
+
+nav ul {
+    list-style: none;
+    flex-grow: 1;
+}
+
+nav li {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color var(--transition-speed);
+    border-left: 3px solid transparent;
+    color: var(--warning-color);
+}
+
+nav li:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+nav li.active {
+    background-color: rgba(255, 215, 0, 0.2);
+    border-left: 3px solid var(--warning-color);
+}
+
+.creator-credit {
+    padding: 20px;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: rgba(255, 215, 0, 0.6);
+    text-align: center;
+}
+
+/* Main Content Styles */
+.main-content {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
+    padding: 30px;
+    transition: margin-left var(--transition-speed);
+    background-color: var(--light-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+/* Dashboard Styles */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed);
+    border: 1px solid var(--warning-color);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(223, 175, 86, 0.2);
+}
+
+.stat-card h3 {
+    font-size: 1rem;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--danger-color);
+}
+
+.recent-entries {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--warning-color);
+}
+
+/* Entries List Styles */
+.entries-list {
+    margin-top: 20px;
+}
+
+.entry-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    border: 1px solid var(--warning-color);
+}
+
+.entry-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.2);
+}
+
+.entry-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+.entry-details {
+    flex-grow: 1;
+}
+
+.entry-service {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+}
+
+.entry-username {
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.entry-date {
+    color: var(--secondary-color);
+    font-size: 0.8rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: var(--secondary-color);
+}
+
+/* Filter Options */
+.entries-header {
+    margin-bottom: 20px;
+}
+
+.filter-options {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.search-box {
+    position: relative;
+    flex-grow: 1;
+    max-width: 300px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-color);
+}
+
+.search-box input {
+    padding: 10px 10px 10px 35px;
+    border: 1px solid var(--warning-color);
+    border-radius: 4px;
+    width: 100%;
+    background-color: white;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid var(--warning-color);
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* Form Styles */
+.entry-form {
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid var(--warning-color);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--warning-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+    background-color: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--warning-color);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-text {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    display: block;
+    margin-top: 5px;
+}
+
+/* Password Input Container */
+.password-input-container {
+    position: relative;
+    display: flex;
+}
+
+.password-input-container input {
+    padding-right: 80px;
+    flex-grow: 1;
+}
+
+.generate-password,
+.toggle-password {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.generate-password {
+    right: 40px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Password Strength Meter */
+.password-strength-meter {
+    margin-top: 10px;
+}
+
+.strength-bar {
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    width: 0%;
+    transition: width 0.3s, background-color 0.3s;
+}
+
+.strength-text {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.btn-primary {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+}
+
+.btn-primary:hover {
+    background-color: #FFC000;
+}
+
+.btn-secondary {
+    background-color: var(--info-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #1A7FDD;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #E03C00;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    border: 2px solid var(--warning-color);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--secondary-color);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Detail Item Styles */
+.detail-item {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.detail-item label {
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    display: block;
+}
+
+.detail-value {
+    padding: 10px;
+    background-color: var(--light-color);
+    border-radius: 4px;
+    word-break: break-all;
+    border: 1px solid var(--warning-color);
+}
+
+.password-field {
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
+.copy-btn, .toggle-password-btn {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.toggle-password-btn {
+    right: 30px;
+}
+
+/* Password Generator Styles */
+.generator-options {
+    margin-bottom: 20px;
+}
+
+.option-item {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.option-item label {
+    margin-bottom: 0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+input[type="range"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    accent-color: var(--warning-color);
+}
+
+input[type="checkbox"] {
+    accent-color: var(--warning-color);
+}
+
+.generated-password {
+    display: flex;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.generated-password input {
+    flex-grow: 1;
+    padding-right: 80px;
+    font-family: monospace;
+}
+
+.refresh-btn {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Toast Notification */
+.toast-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--dark-color);
+    color: var(--warning-color);
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1100;
+    animation: slideIn 0.3s;
+    border: 1px solid var(--warning-color);
+}
+
+.toast-notification.fade-out {
+    animation: fadeOut 0.3s forwards;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        overflow: hidden;
+    }
+
+    .sidebar:hover {
+        width: var(--sidebar-width);
+    }
+
+    .logo span, nav li span {
+        display: none;
+    }
+
+    .sidebar:hover .logo span,
+    .sidebar:hover nav li span {
+        display: inline;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .sidebar:hover ~ .main-content {
+        margin-left: var(--sidebar-width);
+    }
+
+    .filter-options {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        max-width: 100%;
+    }
+}

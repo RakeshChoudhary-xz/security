@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Password Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo"><i class="fas fa-lock"></i> <span>SecureVault</span></div>
+            <nav>
+                <ul>
+                    <li class="active" data-tab="dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></li>
+                    <li data-tab="all-entries"><i class="fas fa-key"></i> <span>All Entries</span></li>
+                    <li data-tab="add-new"><i class="fas fa-plus-circle"></i> <span>Add New</span></li>
+                    <li data-tab="security"><i class="fas fa-shield-alt"></i> <span>Security</span></li>
+                </ul>
+            </nav>
+            <div class="creator-credit">Created By Rakesh Choudhary</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h1>Dashboard</h1>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Passwords</h3>
+                        <div class="number" id="total-passwords">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Weak Passwords</h3>
+                        <div class="number" id="weak-passwords">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Expired Passwords</h3>
+                        <div class="number" id="expired-passwords">0</div>
+                    </div>
+                </div>
+
+                <div class="recent-entries">
+                    <h2>Recent Entries</h2>
+                    <div id="recent-entries-list" class="entries-list">
+                        <div class="empty-state">No recent entries</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Entries Tab -->
+            <div id="all-entries" class="tab-content">
+                <div class="entries-header">
+                    <h1>All Entries</h1>
+                    <div class="filter-options">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-entries" placeholder="Search entries...">
+                        </div>
+                        <select id="filter-service">
+                            <option value="all">All Services</option>
+                            <option value="google">Google</option>
+                            <option value="microsoft">Microsoft</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">Twitter</option>
+                        </select>
+                        <select id="filter-category">
+                            <option value="all">All Categories</option>
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="social">Social Media</option>
+                            <option value="financial">Financial</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <button id="sort-by-date">
+                            Sort by Date <i class="fas fa-sort-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="all-entries-list" class="entries-list">
+                    <div class="empty-state">No entries found</div>
+                </div>
+            </div>
+
+            <!-- Add New Tab -->
+            <div id="add-new" class="tab-content">
+                <h1>Add New Entry</h1>
+                <form id="add-entry-form" class="entry-form">
+                    <div class="form-group">
+                        <label for="service-name">Service</label>
+                        <select id="service-name" required>
+                            <option value="google">Google</option>
+                            <option value="microsoft">Microsoft</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="twitter">Twitter</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="entry-category">Category</label>
+                        <select id="entry-category" required>
+                            <option value="personal">Personal</option>
+                            <option value="work">Work</option>
+                            <option value="social">Social Media</option>
+                            <option value="financial">Financial</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="custom-service-group" style="display: none;">
+                        <label for="custom-service">Service Name</label>
+                        <input type="text" id="custom-service" placeholder="Enter service name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Username/Email</label>
+                        <input type="text" id="username" placeholder="Enter username or email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-input-container">
+                            <input type="password" id="password" placeholder="Enter password" required>
+                            <button type="button" class="generate-password" id="generate-password-btn">
+                                <i class="fas fa-dice"></i> Generate
+                            </button>
+                            <button type="button" class="toggle-password" id="toggle-password-btn">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength-meter">
+                            <div class="strength-bar"></div>
+                            <span class="strength-text">Password Strength: <span id="strength-text">-</span></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password-expiration">Password Expiration (days)</label>
+                        <input type="number" id="password-expiration" min="1" max="365" value="90" required>
+                        <small class="form-text">Recommended: Change passwords every 90 days</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea id="notes" placeholder="Add any notes about this account"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="save-entry-btn">Save Entry</button>
+                        <button type="reset" class="btn-secondary" id="clear-form-btn">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Security Tab -->
+            <div id="security" class="tab-content">
+                <h1>Strong Password Generator</h1>
+                <div class="security-settings">
+                    <div class="setting-item">
+                        <h3>Generate Strong Passwords</h3>
+                        <p>Generate random strong passwords with different combinations</p>
+                        <div class="generator-options">
+                            <div class="option-item">
+                                <label for="secure-pw-length">Length</label>
+                                <input type="range" id="secure-pw-length" min="12" max="32" value="16">
+                                <span id="secure-pw-length-value">16</span>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="secure-include-uppercase" checked>
+                                <label for="secure-include-uppercase">Uppercase Letters (A-Z)</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="secure-include-lowercase" checked>
+                                <label for="secure-include-lowercase">Lowercase Letters (a-z)</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="secure-include-numbers" checked>
+                                <label for="secure-include-numbers">Numbers (0-9)</label>
+                            </div>
+                            <div class="option-item">
+                                <input type="checkbox" id="secure-include-symbols" checked>
+                                <label for="secure-include-symbols">Symbols (!@#$%^&*)</label>
+                            </div>
+                        </div>
+                        <div class="generated-passwords">
+                            <div class="password-item">
+                                <input type="text" id="secure-password-1" readonly>
+                                <div class="password-strength-indicator">
+                                    <div class="strength-bar"></div>
+                                    <span class="strength-text">Strength: <span id="secure-strength-1">-</span></span>
+                                </div>
+                                <button class="copy-btn" data-target="secure-password-1">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="password-item">
+                                <input type="text" id="secure-password-2" readonly>
+                                <div class="password-strength-indicator">
+                                    <div class="strength-bar"></div>
+                                    <span class="strength-text">Strength: <span id="secure-strength-2">-</span></span>
+                                </div>
+                                <button class="copy-btn" data-target="secure-password-2">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="password-item">
+                                <input type="text" id="secure-password-3" readonly>
+                                <div class="password-strength-indicator">
+                                    <div class="strength-bar"></div>
+                                    <span class="strength-text">Strength: <span id="secure-strength-3">-</span></span>
+                                </div>
+                                <button class="copy-btn" data-target="secure-password-3">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="generate-secure-passwords">Generate New Passwords</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Entry Detail Modal -->
+    <div class="modal" id="entry-detail-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2 id="modal-service-name">Service Name</h2>
+            </div>
+            <div class="modal-body">
+                <div class="detail-item">
+                    <label>Username/Email</label>
+                    <div class="detail-value" id="modal-username">username@example.com</div>
+                    <button class="copy-btn" data-target="modal-username">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="detail-item">
+                    <label>Password</label>
+                    <div class="detail-value password-field" id="modal-password">••••••••</div>
+                    <button class="toggle-password-btn" id="modal-toggle-password">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="copy-btn" data-target="modal-password">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="detail-item">
+                    <label>Created</label>
+                    <div class="detail-value" id="modal-created">January 1, 2023</div>
+                </div>
+                <div class="detail-item">
+                    <label>Last Updated</label>
+                    <div class="detail-value" id="modal-updated">January 1, 2023</div>
+                </div>
+                <div class="detail-item" id="modal-notes-container" style="display: none;">
+                    <label>Notes</label>
+                    <div class="detail-value" id="modal-notes">No notes available</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="edit-entry-btn">Edit</button>
+                <button class="btn-danger" id="delete-entry-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Generator Modal -->
+    <div class="modal" id="password-generator-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Password Generator</h2>
+            <div class="generator-options">
+                <div class="option-item">
+                    <label for="pw-length">Length</label>
+                    <input type="range" id="pw-length" min="8" max="32" value="16">
+                    <span id="pw-length-value">16</span>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="include-uppercase" checked>
+                    <label for="include-uppercase">Uppercase Letters (A-Z)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="include-lowercase" checked>
+                    <label for="include-lowercase">Lowercase Letters (a-z)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="include-numbers" checked>
+                    <label for="include-numbers">Numbers (0-9)</label>
+                </div>
+                <div class="option-item">
+                    <input type="checkbox" id="include-symbols" checked>
+                    <label for="include-symbols">Symbols (!@#$%^&*)</label>
+                </div>
+            </div>
+            <div class="generated-password">
+                <input type="text" id="generated-password" readonly>
+                <button class="copy-btn" id="copy-generated-password">
+                    <i class="fas fa-copy"></i>
+                </button>
+                <button class="refresh-btn" id="refresh-password">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+            <div class="password-strength">
+                <div class="strength-meter">
+                    <div class="strength-bar"></div>
+                </div>
+                <span class="strength-text">Strength: <span id="generated-strength-text">-</span></span>
+            </div>
+            <button class="btn-primary" id="use-password-btn">Use This Password</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
